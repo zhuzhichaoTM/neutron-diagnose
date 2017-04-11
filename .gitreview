@@ -1,0 +1,5 @@
+[gerrit]
+host=10.121.5.36
+port=29418
+project=fitcloud/neutron-diagnose.git
+defaultbranch=fitos3.0-dev
