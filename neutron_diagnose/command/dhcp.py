@@ -12,6 +12,7 @@
 #
 
 from neutron_diagnose.command import commandmanager
+from neutron_diagnose.common import utils
 from neutron_diagnose.i18n import _
 
 
@@ -22,21 +23,27 @@ class CheckVmIp(commandmanager.ShowOne):
     def get_parser(self, prog_name):
         parser = super(CheckVmIp, self).get_parser(prog_name)
         parser.add_argument(
-            'instance-id',
+            'instance_id',
             metavar='<instance-id>',
             help=_('the instance uuid.'),
         )
         parser.add_argument(
-            'fixed-ip',
+            'fixed_ip',
             metavar='<fixed-ip>',
             help=_('the fixed ip of instance.'),
         )
         return parser
 
     def take_action(self, parsed_args):
+        utils.validate_uuid(parsed_args.instance_id)
+        utils.validate_ip_address(parsed_args.fixed_ip)
+
         compute_client = self.app.client_manager.compute
         network_client = self.app.client_manager.network
         ssh_client = self.app.client_manager.ssh
+
+        server = compute_client.servers.get(parsed_args.instance_id)
+        network = network_client.find_network()
         result = {
             'vif': 'OK',
             'ovs flow': 'OK',

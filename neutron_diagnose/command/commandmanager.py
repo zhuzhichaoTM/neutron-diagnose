@@ -15,6 +15,7 @@
 
 """Modify cliff.CommandManager"""
 
+import abc
 import prettytable
 import pkg_resources
 import six
@@ -65,6 +66,7 @@ class CommandManager(cliff.commandmanager.CommandManager):
         return list(self.commands.keys())
 
 
+@six.add_metaclass(abc.ABCMeta)
 class ShowOne(command.Command, show.ShowOne):
 
     def _format_row(self, row):

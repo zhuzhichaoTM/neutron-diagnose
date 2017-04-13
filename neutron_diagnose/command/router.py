@@ -25,7 +25,7 @@ class CheckRouterBrainSplit(commandmanager.ShowOne):
     def get_parser(self, prog_name):
         parser = super(CheckRouterBrainSplit, self).get_parser(prog_name)
         parser.add_argument(
-            '--router-id',
+            'router_id',
             metavar='<router-id>',
             help=_('the router uuid.'),
         )
